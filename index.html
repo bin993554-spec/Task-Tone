@@ -129,18 +129,23 @@
             display: flex;
             justify-content: space-around;
             background-color: white;
-            padding: 10px 0;
+            padding: 12px 0;
             border-top: 1px solid #eee;
         }
         
         .nav-item {
             text-align: center;
             color: #666;
-            font-size: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 8px;
+            border-radius: 5px;
+            min-width: 60px;
         }
         
         .nav-item.active {
             color: #0088cc;
+            background-color: #f0f8ff;
         }
         
         .task-item {
@@ -167,49 +172,6 @@
             border-radius: 5px;
         }
         
-        .referral-steps {
-            margin: 15px 0;
-        }
-        
-        .step {
-            display: flex;
-            margin-bottom: 10px;
-        }
-        
-        .step-number {
-            background-color: #0088cc;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-        
-        .referral-link {
-            background-color: #f8f8f8;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            word-break: break-all;
-        }
-        
-        .social-buttons {
-            display: flex;
-            justify-content: space-around;
-            margin: 15px 0;
-        }
-        
-        .social-btn {
-            padding: 10px 15px;
-            background-color: #f0f0f0;
-            border: none;
-            border-radius: 5px;
-        }
-        
         .payment-method {
             display: flex;
             align-items: center;
@@ -233,6 +195,15 @@
             margin-top: 10px;
             font-weight: bold;
         }
+        
+        .clear-instruction {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -252,7 +223,9 @@
             
             <div class="content">
                 <h2 class="section-title">Daily Check-in Bonus</h2>
-                <p>Claim your daily reward and keep your streak!</p>
+                <div class="clear-instruction">
+                    <p>Claim your daily reward and keep your streak! Earn 2 NOT coins every day you check in.</p>
+                </div>
                 
                 <div class="checkin-grid">
                     <div class="checkin-day">Day 1<br>+2 NOT</div>
@@ -268,11 +241,6 @@
                 </div>
                 
                 <button class="btn" id="checkin-btn">Wait For Next Day</button>
-                
-                <h2 class="section-title">Invite Friends & Earn</h2>
-                <p>Get 5% of their earnings</p>
-                
-                <button class="btn" onclick="showScreen('refer-screen')">Start Referring</button>
             </div>
         </div>
         
@@ -291,6 +259,9 @@
             
             <div class="content">
                 <h2 class="section-title">Ads Task Overview</h2>
+                <div class="clear-instruction">
+                    <p>Watch ads to earn NOT coins. Complete daily and hourly tasks to maximize your earnings.</p>
+                </div>
                 
                 <div class="task-item">
                     <div class="task-info">
@@ -350,79 +321,19 @@
             
             <div class="content" style="text-align: center;">
                 <h2 class="section-title">Telegram Tasks</h2>
+                <div class="clear-instruction">
+                    <p>Complete Telegram tasks to earn additional NOT coins.</p>
+                </div>
+                
                 <p>No tasks available</p>
                 
                 <div style="margin-top: 30px;">
                     <p>Join our Telegram channel to get 4 NOT free!</p>
-                    <button class="btn" onclick="window.open('https://t.me/PENGUIN70', '_blank')">Join Channel</button>
+                    <button class="btn" onclick="window.open('https://t.me/TASKTONE', '_blank')">Join Channel</button>
                 </div>
                 
                 <div style="margin-top: 30px;">
                     <button class="btn" onclick="verifyTelegram()" id="verify-btn">Verify Join (+4 NOT)</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Refer Screen -->
-        <div id="refer-screen" style="display: none;">
-            <div class="header">
-                <span onclick="showScreen('home-screen')">Back</span>
-                <span>Refer & Earn</span>
-                <span>Menu</span>
-            </div>
-            
-            <div class="balance">
-                <h2>Balance</h2>
-                <div class="balance-amount" id="refer-balance">0 NOT</div>
-            </div>
-            
-            <div class="content">
-                <h2 class="section-title">Refer & Earn Forever</h2>
-                <p>Earn 5% of your friends earnings for life!</p>
-                <p>Follow these simple steps to start:</p>
-                
-                <div class="referral-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div>
-                            <strong>Copy Your Link</strong>
-                            <p>Grab your unique referral link below.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div>
-                            <strong>Share with Friends</strong>
-                            <p>Use the Telegram, WhatsApp, or Twitter/X buttons to share your link.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div>
-                            <strong>Earn Lifetime Rewards</strong>
-                            <p>Get 5% of your friends earnings forever once they join!</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <h3>Your Referral Link</h3>
-                <div class="referral-link" id="referral-link">
-                    https://t.me/penguco_bot?start=ref_<span id="user-ref-id">USER123</span>
-                </div>
-                
-                <div class="social-buttons">
-                    <button class="social-btn" onclick="shareTelegram()">Telegram</button>
-                    <button class="social-btn" onclick="shareWhatsApp()">WhatsApp</button>
-                    <button class="social-btn" onclick="shareTwitter()">Twitter/X</button>
-                </div>
-                
-                <h3>Referrals List</h3>
-                <input type="text" class="input-field" placeholder="Search referrals by username...">
-                
-                <div id="referral-stats" style="margin-top: 20px;">
-                    <h4>Your Referral Earnings: <span id="ref-earnings">0</span> NOT</h4>
                 </div>
             </div>
         </div>
@@ -442,6 +353,9 @@
             
             <div class="content">
                 <h2 class="section-title">Withdraw Funds</h2>
+                <div class="clear-instruction">
+                    <p>Withdraw your NOT coins to your preferred payment method. Minimum withdrawal is 150 NOT.</p>
+                </div>
                 
                 <h3>Amount</h3>
                 <input type="number" class="input-field" id="withdraw-amount" placeholder="Enter amount">
@@ -484,6 +398,9 @@
                 <p style="text-align: center; margin-bottom: 20px;">Joined July 29, 2025</p>
                 
                 <h2 class="section-title">Your Statistics</h2>
+                <div class="clear-instruction">
+                    <p>View your earnings and activity statistics.</p>
+                </div>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -504,12 +421,15 @@
                     </div>
                     
                     <div class="stat-card">
-                        <p>Referrals</p>
-                        <div class="stat-value" id="referrals-count">0</div>
+                        <p>Withdrawals</p>
+                        <div class="stat-value" id="withdrawals-count">0</div>
                     </div>
                 </div>
                 
                 <h3 style="margin-top: 30px;">Help Center</h3>
+                <div class="clear-instruction">
+                    <p>Contact support if you need any assistance.</p>
+                </div>
                 
                 <h4 style="margin-top: 15px;">Developer Contact</h4>
                 <p>Telegram: @shap642</p>
@@ -529,9 +449,6 @@
             </div>
             <div class="nav-item" onclick="showScreen('tg-screen')">
                 <div>TG Tasks</div>
-            </div>
-            <div class="nav-item" onclick="showScreen('refer-screen')">
-                <div>Refer</div>
             </div>
             <div class="nav-item" onclick="showScreen('withdraw-screen')">
                 <div>Withdraw</div>
@@ -576,23 +493,16 @@
             totalEarnings: 0,
             currentStreak: 0,
             tasksDone: 0,
-            referrals: 0,
-            referralEarnings: 0,
+            withdrawals: 0,
             lastCheckin: null,
             lastTaskTime: null,
             telegramVerified: false,
-            referredBy: getUrlParameter('ref') || null,
             ataniId: "1021"
         };
         
         // Initialize the app
         function initApp() {
-            // Check if user was referred
-            if (userData.referredBy) {
-                console.log(`User was referred by: ${userData.referredBy}`);
-            }
-            
-            // Set referral link with user's ID
+            // Set user ID
             document.getElementById('user-ref-id').textContent = userData.userId;
             
             // Load saved data from localStorage
@@ -615,16 +525,6 @@
         // Generate a unique user ID
         function generateUserId() {
             return 'USER' + Math.floor(100000 + Math.random() * 900000);
-        }
-        
-        // Get URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(window.location.href);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
         
         // Load user data from localStorage
@@ -663,13 +563,10 @@
                 updateTaskCounts();
             } else if (screenId === 'tg-screen') {
                 document.querySelectorAll('.nav-item')[2].classList.add('active');
-            } else if (screenId === 'refer-screen') {
-                document.querySelectorAll('.nav-item')[3].classList.add('active');
-                document.getElementById('ref-earnings').textContent = userData.referralEarnings;
             } else if (screenId === 'withdraw-screen') {
-                document.querySelectorAll('.nav-item')[4].classList.add('active');
+                document.querySelectorAll('.nav-item')[3].classList.add('active');
             } else if (screenId === 'profile-screen') {
-                document.querySelectorAll('.nav-item')[5].classList.add('active');
+                document.querySelectorAll('.nav-item')[4].classList.add('active');
                 updateStats();
             }
             
@@ -689,7 +586,7 @@
             document.getElementById('total-earned').textContent = userData.totalEarnings;
             document.getElementById('current-streak').textContent = userData.currentStreak;
             document.getElementById('tasks-done').textContent = userData.tasksDone;
-            document.getElementById('referrals-count').textContent = userData.referrals;
+            document.getElementById('withdrawals-count').textContent = userData.withdrawals;
         }
         
         // Update task counts
@@ -786,13 +683,6 @@
             userData.tasksDone++;
             userData.lastTaskTime = new Date();
             
-            // If user was referred, give 5% to referrer
-            if (userData.referredBy) {
-                const referrerBonus = 0.15; // 5% of 3 NOT
-                userData.referralEarnings += referrerBonus;
-                console.log(`Credited 0.15 NOT to referrer ${userData.referredBy}`);
-            }
-            
             updateBalances();
             updateTaskCounts();
             updateStats();
@@ -871,16 +761,18 @@
             
             // Deduct from balance FIRST
             userData.balance -= amount;
+            userData.withdrawals++;
             updateBalances();
             saveUserData();
             
-            // Prepare withdrawal message
+            // Prepare withdrawal message to send to Telegram bot
             let message = `New withdrawal request:\nAmount: ${amount} NOT\n`;
             message += `Payment Method: ${isAtani ? 'Atani (ID: 1021)' : 'Binance'}\n`;
             message += `Address: ${address}\nUser ID: ${userData.userId}\n`;
             message += `New Balance: ${userData.balance} NOT`;
             
-            console.log('Withdrawal request:', message);
+            // Send message to Telegram bot
+            sendTelegramMessage(message);
             
             // Reset form
             document.getElementById('withdraw-amount').value = '';
@@ -889,20 +781,28 @@
             alert(`Withdrawal request for ${amount} NOT has been submitted. Your balance has been deducted. Processing may take 24-48 hours.`);
         }
         
-        // Share functions
-        function shareTelegram() {
-            const link = document.getElementById('referral-link').textContent.trim();
-            window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}`, '_blank');
-        }
-        
-        function shareWhatsApp() {
-            const link = document.getElementById('referral-link').textContent.trim();
-            window.open(`https://wa.me/?text=${encodeURIComponent(`Join Not Coin Tasks and earn with me: ${link}`)}`, '_blank');
-        }
-        
-        function shareTwitter() {
-            const link = document.getElementById('referral-link').textContent.trim();
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Join Not Coin Tasks and earn with me: ${link}`)}`, '_blank');
+        // Send message to Telegram bot
+        function sendTelegramMessage(message) {
+            const botToken = '8194573637:AAEPdedR90TgKhV-zNW3d7brPYS7FsQyynM';
+            const chatId = '@shap642'; // Your Telegram UPI
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Message sent to Telegram:', data);
+            })
+            .catch(error => {
+                console.error('Error sending message to Telegram:', error);
+            });
         }
         
         // Logout
@@ -934,4 +834,4 @@
         }
     </script>
 </body>
-</html>
+                            </html>
