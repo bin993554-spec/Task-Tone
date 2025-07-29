@@ -24,6 +24,7 @@
             min-height: 100vh;
             position: relative;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding-bottom: 60px; /* Added for fixed nav */
         }
         
         .header {
@@ -131,6 +132,7 @@
             background-color: white;
             padding: 12px 0;
             border-top: 1px solid #eee;
+            z-index: 1000;
         }
         
         .nav-item {
@@ -141,6 +143,7 @@
             padding: 5px 8px;
             border-radius: 5px;
             min-width: 60px;
+            cursor: pointer;
         }
         
         .nav-item.active {
@@ -204,12 +207,21 @@
             font-size: 14px;
             line-height: 1.5;
         }
+        
+        /* Screen containers */
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="container" id="app">
         <!-- Home Screen -->
-        <div id="home-screen">
+        <div id="home-screen" class="screen active">
             <div class="header">
                 <span>Close</span>
                 <span>Not Coin</span>
@@ -245,7 +257,7 @@
         </div>
         
         <!-- Ads Task Screen -->
-        <div id="ads-screen" style="display: none;">
+        <div id="ads-screen" class="screen">
             <div class="header">
                 <span onclick="showScreen('home-screen')">Back</span>
                 <span>Ads Tasks</span>
@@ -307,7 +319,7 @@
         </div>
         
         <!-- Telegram Tasks Screen -->
-        <div id="tg-screen" style="display: none;">
+        <div id="tg-screen" class="screen">
             <div class="header">
                 <span onclick="showScreen('home-screen')">Back</span>
                 <span>Telegram Tasks</span>
@@ -339,7 +351,7 @@
         </div>
         
         <!-- Withdraw Screen -->
-        <div id="withdraw-screen" style="display: none;">
+        <div id="withdraw-screen" class="screen">
             <div class="header">
                 <span onclick="showScreen('home-screen')">Back</span>
                 <span>Withdraw</span>
@@ -381,7 +393,7 @@
         </div>
         
         <!-- Profile Screen -->
-        <div id="profile-screen" style="display: none;">
+        <div id="profile-screen" class="screen">
             <div class="header">
                 <span onclick="showScreen('home-screen')">Back</span>
                 <span>Profile</span>
@@ -502,9 +514,6 @@
         
         // Initialize the app
         function initApp() {
-            // Set user ID
-            document.getElementById('user-ref-id').textContent = userData.userId;
-            
             // Load saved data from localStorage
             loadUserData();
             
@@ -527,48 +536,60 @@
             return 'USER' + Math.floor(100000 + Math.random() * 900000);
         }
         
-        // Load user data from localStorage
+        // Load user data from localStorage with proper error handling
         function loadUserData() {
-            const savedData = localStorage.getItem('notCoinUserData');
-            if (savedData) {
-                Object.assign(userData, JSON.parse(savedData));
+            try {
+                const savedData = localStorage.getItem('notCoinUserData');
+                if (savedData) {
+                    const parsedData = JSON.parse(savedData);
+                    // Merge with default values to avoid undefined errors
+                    userData = {
+                        ...userData,
+                        ...parsedData
+                    };
+                }
+            } catch (e) {
+                console.error('Error loading user data:', e);
+                // Reset to default if corrupted
+                localStorage.removeItem('notCoinUserData');
             }
         }
         
-        // Save user data to localStorage
+        // Save user data to localStorage with proper error handling
         function saveUserData() {
-            localStorage.setItem('notCoinUserData', JSON.stringify(userData));
+            try {
+                localStorage.setItem('notCoinUserData', JSON.stringify(userData));
+            } catch (e) {
+                console.error('Error saving user data:', e);
+            }
         }
         
         // Show different screens
         function showScreen(screenId) {
             // Hide all screens
-            document.querySelectorAll('.container > div').forEach(div => {
-                div.style.display = 'none';
+            document.querySelectorAll('.screen').forEach(div => {
+                div.classList.remove('active');
             });
             
             // Show the selected screen
-            document.getElementById(screenId).style.display = 'block';
+            document.getElementById(screenId).classList.add('active');
             
             // Update nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Update active nav item
-            if (screenId === 'home-screen') {
-                document.querySelectorAll('.nav-item')[0].classList.add('active');
-            } else if (screenId === 'ads-screen') {
-                document.querySelectorAll('.nav-item')[1].classList.add('active');
-                updateTaskCounts();
-            } else if (screenId === 'tg-screen') {
-                document.querySelectorAll('.nav-item')[2].classList.add('active');
-            } else if (screenId === 'withdraw-screen') {
-                document.querySelectorAll('.nav-item')[3].classList.add('active');
-            } else if (screenId === 'profile-screen') {
-                document.querySelectorAll('.nav-item')[4].classList.add('active');
-                updateStats();
-            }
+            // Update active nav item based on screen
+            const navItems = document.querySelectorAll('.nav-item');
+            if (screenId === 'home-screen') navItems[0].classList.add('active');
+            else if (screenId === 'ads-screen') navItems[1].classList.add('active');
+            else if (screenId === 'tg-screen') navItems[2].classList.add('active');
+            else if (screenId === 'withdraw-screen') navItems[3].classList.add('active');
+            else if (screenId === 'profile-screen') navItems[4].classList.add('active');
+            
+            // Update data for specific screens
+            if (screenId === 'ads-screen') updateTaskCounts();
+            if (screenId === 'profile-screen') updateStats();
             
             // Update all balances
             updateBalances();
@@ -820,7 +841,7 @@
         });
         
         // Initialize the app when loaded
-        window.onload = initApp;
+        window.addEventListener('DOMContentLoaded', initApp);
         
         // Ad fallback mechanism
         window.AdGigaFallback = function() {
@@ -834,4 +855,4 @@
         }
     </script>
 </body>
-                            </html>
+</html>
